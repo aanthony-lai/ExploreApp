@@ -1,0 +1,13 @@
+﻿.return {
+    margin: 5rem 0 0 1rem;
+}
+    .return img {
+        height: 2rem;
+    }
+
+a {
+    display: flex;
+    gap: 1rem;
+    text-decoration: none;
+    color: black;
+}

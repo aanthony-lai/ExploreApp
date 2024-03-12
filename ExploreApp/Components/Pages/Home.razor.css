@@ -1,0 +1,50 @@
+﻿.page {
+    padding-bottom: 10rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.groups {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+    .groups h1 {
+        width: 100%;
+    }
+
+.box {
+    flex-shrink: 0;
+    border: 1px solid;
+    height: 11rem;
+    width: 10rem;
+    border-radius: 20px;
+}
+
+    .box img {
+        height: 60%;
+        width: 100%;
+    }
+
+    .box .description {
+        display: flex;
+        flex-wrap: wrap;
+        height: 40%;
+        width: 100%;
+        border-top: 1px solid;
+        margin: 0;
+        padding: 1rem;
+    }
+
+    .box h6 {
+        width: 100%;
+        margin: 0;
+        font-weight: 700;
+    }
+
+.box-container {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
