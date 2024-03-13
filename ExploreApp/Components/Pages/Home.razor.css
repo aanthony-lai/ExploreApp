@@ -13,17 +13,31 @@
         width: 100%;
     }
 
+.image-container {
+    height: 60%;
+}
+
+.box-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
 .box {
+    margin-right: 1rem;
     flex-shrink: 0;
     border: 1px solid;
+    border-color: #f48db4;
     height: 11rem;
     width: 10rem;
     border-radius: 20px;
 }
 
     .box img {
-        height: 60%;
+        height: 100%;
         width: 100%;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
     }
 
     .box .description {
@@ -31,20 +45,20 @@
         flex-wrap: wrap;
         height: 40%;
         width: 100%;
-        border-top: 1px solid;
+        border-top: 1px groove;
         margin: 0;
-        padding: 1rem;
+        padding: 0.5rem 1rem 1rem 1rem;
     }
 
     .box h6 {
         width: 100%;
         margin: 0;
         font-weight: 700;
+        font-size: 3vw;
     }
 
-.box-container {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-}
+    .box p {
+        width: 100%;
+        margin: 0;
+        font-size: 3vw;
+    }

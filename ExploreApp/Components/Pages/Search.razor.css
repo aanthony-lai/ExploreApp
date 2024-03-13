@@ -1,13 +1,37 @@
-﻿.return {
-    margin: 5rem 0 0 1rem;
+﻿.return-logo {
+    height: 4rem;
+    padding: 1rem 0 0 1rem;
 }
-    .return img {
-        height: 2rem;
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem 1rem 5rem 1rem;
+}
+
+.result-card {
+    display: flex;
+    border: solid 1px;
+    border-radius: 10px;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+    .result-card img {
+        height: 7rem;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
     }
 
-a {
-    display: flex;
-    gap: 1rem;
-    text-decoration: none;
-    color: black;
+.group {
+    width: 100%;
+    margin-left: 1rem;
 }
+    .group .name {
+        font-weight: 700;
+        font-size: 14px;
+        margin: 0;
+        padding-top: 1rem;
+    }
+    .group .type {
+        font-size: 12px;
+    }

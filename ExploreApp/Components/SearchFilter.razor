@@ -1,0 +1,83 @@
+﻿@inject IGooglePlacesService GooglePlacesService
+
+<section class="page animate__animated animate__slideInLeft">
+	<div class="return">
+		<a href="/">
+			@* <img src="https://cdn.iconscout.com/icon/free/png-256/free-back-arrow-1767515-1502579.png" /> *@
+			<h1 id="header">Search</h1>
+		</a>
+	</div>
+	<div class="form">
+		<div class="searchBar">
+			<img src="Icons/Search_icon.png" />
+			<input type="text" placeholder="Search..." @bind-value="searchModel.textQuery"/>
+		</div>
+		@* <div class="group age">
+			<h6>Age</h6>
+			<button class="@(searchModel.selectedAge == "18+" ? "clicked": "")"
+					@onclick="@(() => selectedFilter("age", "18+"))">18+</button>
+			<button class="@(searchModel.selectedAge == "23+" ? "clicked": "")"
+					@onclick="@(() => selectedFilter("age", "23+"))">23+</button>
+			<button class="@(searchModel.selectedAge == "25+" ? "clicked": "")"
+					@onclick="@(() => selectedFilter("age", "25+"))">25+</button>
+		</div> *@
+		<div class="group type">
+			<h6>Type</h6>
+			<button class="@(searchModel.selectedType == "night_club" ? "clicked": "")"
+					@onclick="@(() => selectedFilter("type", "night_club"))">Club</button>
+			<button class="@(searchModel.selectedType == "bar" ? "clicked": "")"
+					@onclick="@(() => selectedFilter("type", "bar"))">Bar</button>
+		</div>
+		<div class="group price">
+			<h6>Price</h6>
+			<button class="@(searchModel.selectedPrice == "PRICE_LEVEL_INEXPENSIVE" ? "clicked": "")"
+					@onclick="@(() => selectedFilter("price", "PRICE_LEVEL_INEXPENSIVE"))">$</button>
+			<button class="@(searchModel.selectedPrice == "PRICE_LEVEL_MODERATE" ? "clicked": "")"
+					@onclick="@(() => selectedFilter("price", "PRICE_LEVEL_MODERATE"))">$$</button>
+			<button class="@(searchModel.selectedPrice == "PRICE_LEVEL_EXPENSIVE" ? "clicked": "")"
+					@onclick="@(() => selectedFilter("price", "PRICE_LEVEL_EXPENSIVE"))">$$$</button>
+		</div>
+		<div class="group location">
+			<h6>Location</h6>
+			<button class="@(searchModel.selectedLocation == "norrmalm" ? "clicked" : "")"
+					@onclick="@(() => selectedFilter("location", "norrmalm"))">Norrmalm</button>
+			<button class="@(searchModel.selectedLocation == "södermalm" ? "clicked": "")"
+					@onclick="@(() => selectedFilter("location", "södermalm"))">Södermalm</button>
+			<button class="@(searchModel.selectedLocation == "östermalm" ? "clicked": "")"
+					@onclick="@(() => selectedFilter("location", "östermalm"))">Östermalm</button>
+		</div>
+		<button @onclick="Search" class="search">Show results</button>
+	</div>
+</section>
+
+@code {
+	[Parameter]
+	public EventCallback<TextSearchDTO> isSearchCallBack { get; set; }
+
+	[Parameter]
+	public TextSearchDTO textSearchData { get; set; } = new TextSearchDTO();
+
+	public SearchModel searchModel = new SearchModel();
+
+	void selectedFilter(string filter, string value)
+	{
+		switch (filter)
+		{
+			case "type":
+				searchModel.selectedType = value;
+				break;
+			case "price":
+				searchModel.selectedPrice = value;
+				break;
+			case "location":
+				searchModel.selectedLocation = value;
+				break;
+		}
+	}
+
+	async Task Search()
+	{
+		textSearchData = await GooglePlacesService.TextSearchAsync(searchModel.textQuery, searchModel.selectedType, searchModel.selectedPrice);
+		await isSearchCallBack.InvokeAsync(textSearchData);
+	}
+}

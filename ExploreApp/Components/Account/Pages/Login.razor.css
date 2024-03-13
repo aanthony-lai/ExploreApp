@@ -1,0 +1,29 @@
+﻿section {
+    display: flex;
+    justify-content: center;
+    margin-top: 40%;
+}
+
+.row {
+    margin-top: 40%;
+}
+
+.login {
+    width: 100%;
+}
+    .login button {
+        background-color: #f48db4;
+        border: none;
+        border-radius: 30px;
+    }
+
+.otherOperations {
+    margin-top: 1rem;
+}
+    .otherOperations p {
+        width: 100%;
+        text-align: center;
+    }
+    .otherOperations a {
+        color: black;
+    }

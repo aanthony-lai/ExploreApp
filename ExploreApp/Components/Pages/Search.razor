@@ -1,12 +1,39 @@
 ﻿@page "/search"
+@rendermode InteractiveServer
 
-<div class="return">
-	<a href="/">
-		<img src="https://cdn.iconscout.com/icon/free/png-256/free-back-arrow-1767515-1502579.png" />
-		<h1>Search</h1>
-	</a>
-</div>
+@if(!isSearch)
+{
+	<SearchFilter isSearchCallBack="isSearchCallbackHandler"/>
+}
+else
+{
+	<NavLink @onclick=@(() => isSearch = !isSearch)>
+		<img class="return-logo" src="https://cdn.iconscout.com/icon/free/png-256/free-back-arrow-1767515-1502579.png" />
+	</NavLink>
+	<div class="container animate__animated animate__fadeInDown">
+		@foreach(var result in textSearchData.places)
+		{
+			<div class="result-card">
+				@* <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" /> *@
+				<img src="@result.photos[0].authorAttributions[0].photoUri"/> 
+				<div class="group">
+					<p class="name">@result.displayName.text</p>
+					<p class="type">@result.primaryTypeDisplayName.text</p>
+				</div>
+			</div>
+		}
+	</div>
+}
+
 
 @code {
+	TextSearchDTO textSearchData = new TextSearchDTO();
 
+	bool isSearch = false;
+
+	void isSearchCallbackHandler(TextSearchDTO TextSearchData)
+	{
+		isSearch = !isSearch;
+		textSearchData = TextSearchData;
+	}
 }

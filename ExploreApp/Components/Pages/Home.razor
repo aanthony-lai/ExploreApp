@@ -1,47 +1,24 @@
-﻿@page "/"
+﻿@rendermode InteractiveServer
+@inject IGooglePlacesService googlePlaceService
+
+@page "/"
 
 <Header />
-<section class="page">
+<section class="page animate__animated animate__slideInLeft">
 	<div class="groups picked-for-you">
 		<h1>Picked for you</h1>
 		<div class="box-container">
-			@for (int i = 0; i < 10; i++)
+			@foreach (var place in nearbySearch.places)
 			{
 				<div class="box">
-					<img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" />
-					<div class="description">
-						<h6>Södra Teatern</h6>
-						<p>Club</p>
+					<div class="image-container">
+						<img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" />
 					</div>
-				</div>
-			}
-		</div>
-	</div>
-	<div class="groups discover-new-places">
-		<h1>Discover new places</h1>
-		<div class="box-container">
-			@for (int i = 0; i < 10; i++)
-			{
-				<div class="box">
-					<img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" />
 					<div class="description">
-						<h6>Södra Teatern</h6>
-						<p>Club</p>
-					</div>
-				</div>
-			}
-		</div>
-	</div>
-	<div class="groups popular-right-now">
-		<h1>Popular right now</h1>
-		<div class="box-container">
-			@for (int i = 0; i < 10; i++)
-			{
-				<div class="box">
-					<img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" />
-					<div class="description">
-						<h6>Södra Teatern</h6>
-						<p>Club</p>
+						<h6>@(place.displayName.text.Length > 17 ? 
+							place.displayName.text.Substring(0, 17) + "..." : 
+							place.displayName.text)</h6>
+						<p>@place.primaryTypeDisplayName.text</p>
 					</div>
 				</div>
 			}
@@ -49,3 +26,13 @@
 	</div>
 </section>
 <WhatsNow />
+
+
+@code {
+	public NearbySearchDTO nearbySearch { get; set; } = new();
+
+	protected override async Task OnInitializedAsync()
+	{
+		nearbySearch = await googlePlaceService.NearbySearchAsync();
+	}
+}

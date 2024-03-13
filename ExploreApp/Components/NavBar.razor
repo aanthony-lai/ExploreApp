@@ -1,32 +1,38 @@
-﻿@inject NavigationManager NavigationManager
+﻿@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
 
 <nav>
-	<div class="item home">
+	<div class="item home" @onclick="@(() => SetIcon("home"))">
 		<a href="/">
-			<img src="Icons/Home_icon.png" />
-			<h6>Home</h6>
+			<img src="Icons/Home_icon.png" class="@(selectedIcon == "home" ? "clicked" : "")" />
+			<h6 class="@(selectedIcon == "home" ? "clicked" : "")">Home</h6>
 		</a>
 	</div>
-	<div class="item home">
+	<div class="item search" @onclick="@(() => SetIcon("search"))">
 		<a href="/search">
-			<img src="Icons/Search_icon.png" />
-			<h6>Search</h6>
+			<img src="Icons/Search_icon.png" class="@(selectedIcon == "search" ? "clicked" : "")" />
+			<h6 class="@(selectedIcon == "search" ? "clicked" : "")">Search</h6>
 		</a>
 	</div>
-	<div class="item home">
+	<div class="item routes" @onclick="@(() => SetIcon("routes"))">
 		<a>
-			<img src="Icons/Routes_icon.png" />
-			<h6>Routes</h6>
+			<img src="Icons/Routes_icon.png" class="@(selectedIcon == "routes" ? "clicked" : "")" />
+			<h6 class="@(selectedIcon == "routes" ? "clicked" : "")">Routes</h6>
 		</a>
 	</div>
-	<div class="item profile">
-		<a>
-			<img class="clicked" src="Icons/Profile_icon.png" />
-			<h6 class="clicked">Profile</h6>
+	<div class="item profile" @onclick="@(() => SetIcon("profile"))">
+		<a href="/Account/Login">
+			<img src="Icons/Profile_icon.png" class="@(selectedIcon == "profile" ? "clicked" : "")" />
+			<h6 class="@(selectedIcon == "profile" ? "clicked" : "")">Profile</h6>
 		</a>
 	</div>
 </nav>
 
 @code {
-	
+	string selectedIcon = "home";
+
+	void SetIcon(string icon)
+	{
+		selectedIcon = icon;
+	}
 }
