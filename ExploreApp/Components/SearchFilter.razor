@@ -12,15 +12,6 @@
 			<img src="Icons/Search_icon.png" />
 			<input type="text" placeholder="Search..." @bind-value="searchModel.textQuery"/>
 		</div>
-		@* <div class="group age">
-			<h6>Age</h6>
-			<button class="@(searchModel.selectedAge == "18+" ? "clicked": "")"
-					@onclick="@(() => selectedFilter("age", "18+"))">18+</button>
-			<button class="@(searchModel.selectedAge == "23+" ? "clicked": "")"
-					@onclick="@(() => selectedFilter("age", "23+"))">23+</button>
-			<button class="@(searchModel.selectedAge == "25+" ? "clicked": "")"
-					@onclick="@(() => selectedFilter("age", "25+"))">25+</button>
-		</div> *@
 		<div class="group type">
 			<h6>Type</h6>
 			<button class="@(searchModel.selectedType == "night_club" ? "clicked": "")"
@@ -46,7 +37,7 @@
 			<button class="@(searchModel.selectedLocation == "östermalm" ? "clicked": "")"
 					@onclick="@(() => selectedFilter("location", "östermalm"))">Östermalm</button>
 		</div>
-		<button @onclick="Search" class="search">Show results</button>
+		<button @onclick="SearchAsync" class="search">Show results</button>
 	</div>
 </section>
 
@@ -75,7 +66,7 @@
 		}
 	}
 
-	async Task Search()
+	async Task SearchAsync()
 	{
 		textSearchData = await GooglePlacesService.TextSearchAsync(searchModel.textQuery, searchModel.selectedType, searchModel.selectedPrice);
 		await isSearchCallBack.InvokeAsync(textSearchData);

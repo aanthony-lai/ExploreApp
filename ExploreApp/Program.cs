@@ -1,6 +1,8 @@
+using ExploreApp.Builders;
 using ExploreApp.Components;
 using ExploreApp.Components.Account;
 using ExploreApp.Data;
+using ExploreApp.HttpClients;
 using ExploreApp.Interfaces;
 using ExploreApp.Services;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -10,6 +12,11 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IGooglePlacesService, GooglePlacesService>();
+builder.Services.AddScoped<IGoogleHttpClientConfigurer, GoogleHttpClientConfigurer>();
+builder.Services.AddScoped<ITextSearchBuilder, TextSearchBuilder>();
+builder.Services.AddScoped<INearbySearchBuilder, NearbySearchBuilder>();
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
@@ -17,7 +24,6 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
-builder.Services.AddScoped<IGooglePlacesService, GooglePlacesService>();
 builder.Services.AddHttpClient("GoogleClient", options => { 
     options.BaseAddress = new Uri("https://places.googleapis.com/v1/"); 
 });

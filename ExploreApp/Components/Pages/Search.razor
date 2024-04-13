@@ -14,8 +14,7 @@ else
 		@foreach(var result in textSearchData.places)
 		{
 			<div class="result-card">
-				@* <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" /> *@
-				<img src="@result.photos[0].authorAttributions[0].photoUri"/> 
+				<img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" />
 				<div class="group">
 					<p class="name">@result.displayName.text</p>
 					<p class="type">@result.primaryTypeDisplayName.text</p>
@@ -24,7 +23,6 @@ else
 		}
 	</div>
 }
-
 
 @code {
 	TextSearchDTO textSearchData = new TextSearchDTO();
