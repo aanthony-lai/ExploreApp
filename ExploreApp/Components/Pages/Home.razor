@@ -6,18 +6,19 @@
 <Header />
 <section class="page animate__animated animate__slideInLeft">
 	<div class="groups picked-for-you">
-		<h1>Picked for you</h1>
+		<h1>Near you</h1>
 		<div class="box-container">
-			@foreach (var place in nearbySearch.places)
+			@foreach (var place in pickedForYou.places)
 			{
 				<div class="box">
 					<div class="image-container">
-						<img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" />
+						<img src="@(googlePlaceService.GetPlacePhoto(place.photos[0].name))"/> 
 					</div>
 					<div class="description">
 						<h6>@(place.displayName.text.Length > 17 ? 
 							place.displayName.text.Substring(0, 17) + "..." : 
-							place.displayName.text)</h6>
+							place.displayName.text)
+						</h6>
 						<p>@place.primaryTypeDisplayName.text</p>
 					</div>
 				</div>
@@ -25,25 +26,26 @@
 		</div>
 	</div>
 	<div class="groups picked-for-you">
-		<h1>Near you</h1>
+		<h1>Hot right now</h1>
 		<div class="box-container">
-			@for (int i = 0; i < 10; i++)
+			@foreach (var place in hotRightNow.places)
 			{
 				<div class="box">
 					<div class="image-container">
-						<img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" />
+						<img src="@(googlePlaceService.GetPlacePhoto(place.photos[0].name))" />
 					</div>
 					<div class="description">
-						<h6>
-							test
+						<h6>@(place.displayName.text.Length > 17 ?
+							place.displayName.text.Substring(0, 17) + "..." :
+							place.displayName.text)
 						</h6>
-						<p>test</p>
+						<p>@place.primaryTypeDisplayName.text</p>
 					</div>
 				</div>
 			}
 		</div>
 	</div>
-	<div class="groups picked-for-you">
+	@* <div class="groups picked-for-you">
 		<h1>Hot right now</h1>
 		<div class="box-container">
 			@for (int i = 0; i < 10; i++)
@@ -61,15 +63,17 @@
 				</div>
 			}
 		</div>
-	</div>
+	</div> *@
 </section>
 <WhatsNow />
 
 @code {
-	public NearbySearchDTO nearbySearch { get; set; } = new();
+	public NearbySearchDTO pickedForYou { get; set; } = new();
+	public NearbySearchDTO hotRightNow { get; set; } = new();
 
 	protected override async Task OnInitializedAsync()
 	{
-		nearbySearch = await googlePlaceService.NearbySearchAsync();
+		pickedForYou = await googlePlaceService.NearbySearchAsync("bar");
+		hotRightNow = await googlePlaceService.NearbySearchAsync("restaurant");
 	}
 }

@@ -6,7 +6,8 @@
 .container {
     display: flex;
     flex-wrap: wrap;
-    padding: 1rem 1rem 5rem 1rem;
+    gap: 1rem;
+    padding: 1rem 1rem 6rem 1rem;
 }
 
 .result-card {
@@ -14,16 +15,22 @@
     border: solid 1px;
     border-radius: 10px;
     width: 100%;
-    margin-bottom: 1rem;
+    /*margin-bottom: 1rem;*/
 }
     .result-card img {
         height: 7rem;
+        width: 100%;
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
     }
 
+.image-container {
+    border-right: 1px solid;
+    width: 50%;
+}
+
 .group {
-    width: 100%;
+    width: 50%;
     margin-left: 1rem;
 }
     .group .name {

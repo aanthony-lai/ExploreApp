@@ -1,5 +1,6 @@
 ﻿@page "/search"
 @rendermode InteractiveServer
+@inject IGooglePlacesService googlePlaceService
 
 @if(!isSearch)
 {
@@ -11,13 +12,15 @@ else
 		<img class="return-logo" src="https://cdn.iconscout.com/icon/free/png-256/free-back-arrow-1767515-1502579.png" />
 	</NavLink>
 	<div class="container animate__animated animate__fadeInDown">
-		@foreach(var result in textSearchData.places)
+		@foreach(var place in textSearchData.places)
 		{
 			<div class="result-card">
-				<img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" />
+				<div class="image-container">
+					<img src="@(googlePlaceService.GetPlacePhoto(place.photos[0].name))" />
+				</div>
 				<div class="group">
-					<p class="name">@result.displayName.text</p>
-					<p class="type">@result.primaryTypeDisplayName.text</p>
+					<p class="name">@place.displayName.text</p>
+					<p class="type">@place.primaryTypeDisplayName.text</p>
 				</div>
 			</div>
 		}
