@@ -18,6 +18,9 @@
 					@onclick="@(() => selectedFilter("type", "night_club"))">Club</button>
 			<button class="@(searchModel.selectedType == "bar" ? "clicked": "")"
 					@onclick="@(() => selectedFilter("type", "bar"))">Bar</button>
+			<button class="@(searchModel.selectedType == "restaurant" ? "clicked": "")"
+					@onclick="@(() => selectedFilter("type", "restaurant"))">Restaurant
+			</button>
 		</div>
 		<div class="group price">
 			<h6>Price</h6>
@@ -68,7 +71,7 @@
 
 	async Task SearchAsync()
 	{
-		textSearchData = await GooglePlacesService.TextSearchAsync(searchModel.textQuery, searchModel.selectedType, searchModel.selectedPrice);
+		textSearchData = await GooglePlacesService.TextSearchAsync(searchModel);
 		await isSearchCallBack.InvokeAsync(textSearchData);
 	}
 }
