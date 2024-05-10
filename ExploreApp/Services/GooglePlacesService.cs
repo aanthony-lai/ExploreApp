@@ -37,7 +37,7 @@ namespace ExploreApp.Services
 				.Build();
 			
 			var response = await client.PostAsJsonAsync("https://places.googleapis.com/v1/places:searchNearby", content);
-			string responseBody = await response.Content.ReadAsStringAsync();
+			var responseBody = await response.Content.ReadAsStringAsync();
 			return JsonSerializer.Deserialize<NearbySearchDTO>(responseBody)
 				?? new NearbySearchDTO();
 		}
@@ -55,7 +55,7 @@ namespace ExploreApp.Services
 				.Build();
 
 			var response = await client.PostAsJsonAsync("https://places.googleapis.com/v1/places:searchText", content);
-			string responseBody = await response.Content.ReadAsStringAsync();
+			var responseBody = await response.Content.ReadAsStringAsync();
 			return JsonSerializer.Deserialize<TextSearchDTO>(responseBody)
 				?? new TextSearchDTO();
 		}
@@ -63,7 +63,7 @@ namespace ExploreApp.Services
 		public string GetPlacePhoto(string placeName)
 		{
 			var apiKey = _configuration.GetValue<string>("GoogleAPI:APIKey");
-			string imageUrl = $"https://places.googleapis.com/v1/{placeName}/media?key={apiKey}&maxWidthPx=1000";
+			var imageUrl = $"https://places.googleapis.com/v1/{placeName}/media?key={apiKey}&maxWidthPx=1000";
 			return imageUrl;
 		}
 	}

@@ -1,9 +1,10 @@
 ﻿@rendermode InteractiveServer
 @inject IGooglePlacesService googlePlaceService
-
+@inject ICachingService<NearbySearchDTO> cachingService
+@inject IMemoryCache cache
 @page "/"
 
-<Header />
+<Header></Header>
 <section class="page animate__animated animate__slideInLeft">
 	<div class="groups picked-for-you">
 		<h1>Near you</h1>
@@ -45,35 +46,36 @@
 			}
 		</div>
 	</div>
-	@* <div class="groups picked-for-you">
-		<h1>Hot right now</h1>
-		<div class="box-container">
-			@for (int i = 0; i < 10; i++)
-			{
-				<div class="box">
-					<div class="image-container">
-						<img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png" />
-					</div>
-					<div class="description">
-						<h6>
-							test
-						</h6>
-						<p>test</p>
-					</div>
-				</div>
-			}
-		</div>
-	</div> *@
 </section>
 <WhatsNow />
 
 @code {
-	public NearbySearchDTO pickedForYou { get; set; } = new();
-	public NearbySearchDTO hotRightNow { get; set; } = new();
+	NearbySearchDTO pickedForYou { get; set; } = new();
+	NearbySearchDTO hotRightNow { get; set; } = new();
 
 	protected override async Task OnInitializedAsync()
 	{
-		pickedForYou = await googlePlaceService.NearbySearchAsync("bar");
-		hotRightNow = await googlePlaceService.NearbySearchAsync("restaurant");
+		const string pickedForYouKey = "pickedForYouData";
+		const string hotRightNowKey = "hotRightNowData";
+
+		if (!cache.TryGetValue(pickedForYouKey, out NearbySearchDTO? cachedPickedForYou))
+		{
+			pickedForYou = await googlePlaceService.NearbySearchAsync("restaurant");
+			cachingService.CacheData(pickedForYou, pickedForYouKey);
+		}
+		else
+		{
+			pickedForYou = cachedPickedForYou!;
+		}
+		      
+		if (!cache.TryGetValue(hotRightNowKey, out NearbySearchDTO? cachedHotRightNow))
+		{
+			hotRightNow = await googlePlaceService.NearbySearchAsync("bar");
+			cachingService.CacheData(hotRightNow, hotRightNowKey);
+		}
+		else
+		{
+			hotRightNow = cachedHotRightNow!;
+		}
 	}
 }

@@ -5,8 +5,8 @@ namespace ExploreApp.HttpClients
 	public class GoogleHttpClientConfigurer: IGoogleHttpClientConfigurer
 	{
 		private readonly IConfiguration _configuration;
-		private readonly string apiKeyHeader = "X-Goog-Api-Key";
-		private readonly string fieldMaskHeader = "X-Goog-FieldMask";
+		private const string ApiKeyHeader = "X-Goog-Api-Key";
+		private const string FieldMaskHeader = "X-Goog-FieldMask";
 
 		public GoogleHttpClientConfigurer(IConfiguration configuration) 
 		{	
@@ -18,13 +18,13 @@ namespace ExploreApp.HttpClients
 			var apiKey = _configuration.GetValue<string>("GoogleAPI:APIKey");
 			var fieldMaskValue = _configuration.GetValue<string>($"GoogleAPI:{serviceType}");
 
-			if (!client.DefaultRequestHeaders.Contains(apiKeyHeader))
+			if (!client.DefaultRequestHeaders.Contains(ApiKeyHeader))
 			{
-				client.DefaultRequestHeaders.Add(apiKeyHeader, apiKey);
+				client.DefaultRequestHeaders.Add(ApiKeyHeader, apiKey);
 			}
-			if (!client.DefaultRequestHeaders.Contains(fieldMaskHeader))
+			if (!client.DefaultRequestHeaders.Contains(FieldMaskHeader))
 			{
-				client.DefaultRequestHeaders.Add(fieldMaskHeader, fieldMaskValue);
+				client.DefaultRequestHeaders.Add(FieldMaskHeader, fieldMaskValue);
 			}
 		}
 	}

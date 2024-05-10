@@ -2,6 +2,7 @@ using ExploreApp.Builders;
 using ExploreApp.Components;
 using ExploreApp.Components.Account;
 using ExploreApp.Data;
+using ExploreApp.DTO.NearbySearchDTOs;
 using ExploreApp.HttpClients;
 using ExploreApp.Interfaces;
 using ExploreApp.Services;
@@ -16,6 +17,8 @@ builder.Services.AddScoped<IGooglePlacesService, GooglePlacesService>();
 builder.Services.AddScoped<IGoogleHttpClientConfigurer, GoogleHttpClientConfigurer>();
 builder.Services.AddScoped<ITextSearchBuilder, TextSearchBuilder>();
 builder.Services.AddScoped<INearbySearchBuilder, NearbySearchBuilder>();
+builder.Services.AddTransient<ICachingService<NearbySearchDTO>, CachingService<NearbySearchDTO>>();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
